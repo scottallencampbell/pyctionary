@@ -1,0 +1,156 @@
+body,
+html {
+    background-color: #000000;
+    font-family: 'Crimson Text';
+    text-align: center;
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    color: #ccccff;
+}
+
+#container {
+    width: 1015px;
+    margin: 0 auto;
+    display: none;
+}
+
+#title {
+    color: #ffffff;
+    font-style: italic;
+    font-size: 60px;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#main {
+    display: none;
+}
+
+div canvas {
+    background-color: #000000;
+}
+
+div#sketchpad {
+    border: solid 1px #ccccff;
+    width: 500px;
+    height: 500px;
+    display: inline-block;
+    position: relative;
+}
+
+div#downscaled {
+    display: none;
+    xdisplay: inline-block;
+}
+
+div#downscaled canvas {
+    xdisplay: none;
+    zoom: 17.857;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: pixelated;
+}
+
+div#preprocessed {
+    display: none;
+    /*display: inline-block;*/
+    border: solid 1px #ccccff;
+    width: 500px;
+    height: 500px;
+}
+
+div#preprocessed canvas {
+    zoom: 17.857;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: pixelated;        
+}
+
+div#chart {
+    display: inline-block;
+    vertical-align: top;
+    /*xmargin-left: 30px;*/
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+div#output {
+    margin-left: 30px;
+    width: 500px;
+    height: 645px;
+    position: relative;
+    top: -68px;
+}
+
+.canvas-icons {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.canvas-icons span {
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.canvas-icons span:hover {
+    color: #ffffff;
+}
+
+.prediction {
+    color: #ffffff;
+    /*font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;*/
+    font-weight: bold;
+    font-size: 23px;
+}
+
+.prediction p {
+    width: 150px;
+    height: 18px;
+    background-color: #555555;
+    display: inline-block;
+    margin: 0 10px 0 0;
+    position: relative;
+    top: 3px;
+}
+
+.prediction p span {
+    height: 100%;
+    display: inline-block;
+    background-color: #ffffff;
+    position: absolute;
+}
+
+#question {
+    color: #ffffff;
+    font-size: 34px;
+    font-style: italic;
+    text-align: left;
+    margin-bottom: 40px;
+    display: none;
+}
+
+#question #label {
+    color: #ccccff;
+    display: none;
+}
