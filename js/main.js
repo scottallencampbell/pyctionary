@@ -102,11 +102,11 @@ const celebrateWin = () => {
 
     setTimeout(() => {
         $('#container').fadeOut();
-    }, 4000);
+    }, 3000);
 
     setTimeout(() => {        
         reload();
-    }, 5000);
+    }, 4000);
 }
 
 const recenterImage = (ctxFrom, ctxTo) => {
@@ -338,10 +338,11 @@ const load = () => {
     enableSketchpad();
     
     // load the model
-    tf.loadLayersModel(MODEL_PATH).then(function (result) { model = result; });
-
-    // run the model prediction once on init, some latency in first load don't want a hiccup while drawing
-    getPredictions(true); // force an initial load
+    tf.loadLayersModel(MODEL_PATH).then(function (result) { 
+        model = result;
+        // run the model prediction once on init, some latency in first load don't want a hiccup while drawing
+        getPredictions(true);
+     });
 
     // select label to be drawn
     selectLabel();
