@@ -7,14 +7,16 @@
     <link href='https://fonts.googleapis.com/css2?family=Roboto&display=swap' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined' rel='stylesheet' />
     <link rel='stylesheet' href='./styles/main.css'>
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'>
+    <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js'></script>
     <script src='./js/atrament.min.js'></script>
     <script src='./js/pica.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js'></script>
+    <script src='./js/js-confetti.browser.js'></script>
     <script src='./js/labels.js'></script>
+    <script src='./js/cookies.js'></script>    
     <script src='./js/main.js'></script>    
 </head>
 
@@ -33,6 +35,7 @@
             <div id='downscaled'><canvas width='28px' height='28px'></canvas></div>
             <div id='preprocessed'><canvas width='28px' height='28px'></canvas></div>
             <div id='chart'>
+                <div id='blind'></div>
                 <div id='output'></div>
             </div>
         </div>

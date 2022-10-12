@@ -1,4 +1,4 @@
-var label = undefined;
+var currentLabel = undefined;
 var model = undefined;
 var interval = undefined;
 var mouseMoved = false;
@@ -10,12 +10,17 @@ var canvasPreprocessed = undefined;
 var ctxPreprocessed = undefined;
 var chartData = undefined;
 var chart = undefined;
-var output = undefined;
 var sketchpad = undefined;
+var correctGuessTimer = undefined;
 var strokes = [];
 const WIDTH = 28;
 const HEIGHT = 28;
 const MODEL_PATH = './models/dist/model.json';
+
+const hashString = (str) => {
+    return str.split('').reduce((prevHash, currVal) =>
+      (((prevHash << 5) - prevHash) + currVal.charCodeAt(0))|0, 0);
+}
 
 const registerMouseMove = () => {
     mouseMoved = true;
@@ -26,7 +31,7 @@ const guess = async (force) => {
 
     var results = await getPredictions();
     
-    renderPredictions(results);
+    renderPredictions(results);    
 }
 
 const getPredictions = async (force) => {
@@ -57,17 +62,51 @@ const renderPredictions = (results) => {
             indices[i] = i;
         }
 
-        let map = results.map(function(el){ return { value: el }});    
-        const labelIndex = LABELS_LOOKUP[label];
+        let map = results.map((el) => { return { value: el }});    
+        const labelIndex = LABELS_LOOKUP[currentLabel];
         map[labelIndex].itemStyle = {color: '#ccccff'};
     
         chartData.series[0].data = map;
         chart.setOption(chartData);    
+
+        const topIndex = results.indexOf(Math.max.apply(Math, results));
+
+        if(LABELS[topIndex] === currentLabel) {
+            if (correctGuessTimer === undefined) {
+                correctGuessTimer = setTimeout(celebrateWin, 2000);
+            }
+        } else if (correctGuessTimer !== undefined) {
+            clearTimeout(correctGuessTimer);
+            correctGuessTimer = undefined;
+        }       
     }
 
-    $(output).fadeTo(200, results === null ? 0 : 1);
+    $('#output').fadeTo(200, results === null ? 0 : 1);
     
     mouseMoved = false;
+}
+
+const celebrateWin = () => {
+    sketchpad.mode = 'disabled';
+    $('#blind').fadeIn();
+    
+    setTimeout(() => {
+        const jsConfetti = new JSConfetti();
+
+        jsConfetti.addConfetti({ 
+            emojis: ['🌈', '🦄', '🐶', '✨', '❤️', '😊', '🥇'],
+            emojiSize: 50,
+            confettiNumber: 80
+        });
+    }, 1500);
+
+    setTimeout(() => {
+        $('#container').fadeOut();
+    }, 4000);
+
+    setTimeout(() => {        
+        reload();
+    }, 5000);
 }
 
 const recenterImage = (ctxFrom, ctxTo) => {
@@ -127,11 +166,10 @@ const specifyCanvases = () => {
 }
 
 const buildChart = () => {
-    output = $('#output');
     chart = echarts.init(document.getElementById('output'));
    
     let labelMap = LABELS.map(function(el){ return { value: el }});
-    const labelIndex = LABELS_LOOKUP[label];
+    const labelIndex = LABELS_LOOKUP[currentLabel];
     labelMap[labelIndex].textStyle = {color: '#ccccff'};
    
     chartData = {
@@ -194,12 +232,12 @@ const buildChart = () => {
     };
 }
 
-const loadSketchpad = () => {
+const enableSketchpad = () => {
     sketchpad = new Atrament(canvas, { 
         width: 500, 
         height: 500, 
         color: 'white', 
-        weight: 8, 
+        weight: 5, 
         smoothing: .7
     });
 
@@ -209,6 +247,8 @@ const loadSketchpad = () => {
             strokes.push(stroke);
         }
     }); 
+
+    strokes = [];
 }
 
 const clearCanvas = () => {
@@ -248,26 +288,46 @@ const undoLastStroke = () => {
 }
 
 const selectLabel = () => {
-    let prettified = '';
-    label = LABELS[Math.floor(Math.random() * LABELS.length)];
+    const cookie = getCookie('labelIndex');
+    
+    let labelIndex = 0;
 
-    if (label.endsWith('s')) {
+    if (cookie === null || parseInt(cookie) === NaN) {
+        labelIndex = Math.floor(Math.random() * LABELS.length);      
+    } else {
+        labelIndex = (parseInt(cookie) + 1) % LABELS.length;
     }
-    else if (['a','e','i','o','u'].indexOf(label[0].toLowerCase()) !== -1) {
-        prettified = 'an ' + label;
+
+    setCookie('labelIndex', labelIndex.toString(), 365);
+
+    const hashedLabels = LABELS.map((e) => { return { label: e, hash: hashString(e + '...salt') }; } );
+    const sortedLabels = hashedLabels.sort((a, b) => a.hash > b.hash ? 1 : -1);    
+
+    currentLabel = sortedLabels[labelIndex].label;
+    console.log('index/label: ' + labelIndex + '/' + currentLabel );
+}
+
+const displayLabel = () => {
+    let prettified = '';
+    
+    if (PLURALS.indexOf(currentLabel) >= 0) {
+        prettified = currentLabel;
+    }
+    else if (['a','e','i','o','u'].indexOf(currentLabel[0].toLowerCase()) !== -1) {
+        prettified = 'an ' + currentLabel;
     }
     else {
-        prettified = 'a ' + label;
+        prettified = 'a ' + currentLabel;
     }
 
     $('#question #label').html(prettified);
 }
 
 const renderPage = () => {
-    $('#container').delay(1000).fadeIn();
-    $('#question').delay(2000).fadeIn();
-    $('#question #label').delay(3000).fadeIn();
-    $('#main').delay(4000).fadeIn();
+    $('#container').delay(2000).fadeIn();
+    $('#question').delay(3000).fadeIn();
+    $('#question #label').delay(4000).fadeIn();
+    $('#main').delay(5000).fadeIn();
 }
 
 const load = () => {
@@ -275,7 +335,7 @@ const load = () => {
     specifyCanvases();
 
     // load the sketchpad control
-    loadSketchpad();
+    enableSketchpad();
     
     // load the model
     tf.loadLayersModel(MODEL_PATH).then(function (result) { model = result; });
@@ -285,6 +345,7 @@ const load = () => {
 
     // select label to be drawn
     selectLabel();
+    displayLabel();
 
     // set up barchart display of predictions
     buildChart();
@@ -294,6 +355,17 @@ const load = () => {
 
     canvas.addEventListener('mousemove', registerMouseMove, false);
     interval = setInterval(guess, 500);
+}
+
+const reload = () => {
+    $('#blind, #question, #question #label, #main').hide();
+    clearCanvas();
+    selectLabel();
+    displayLabel();
+    buildChart();
+    renderPage();
+    
+    sketchpad.mode = 'draw';
 }
 
 $(document).ready(load);

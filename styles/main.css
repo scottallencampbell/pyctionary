@@ -52,12 +52,11 @@ div#sketchpad {
 }
 
 div#downscaled {
+    display: inline-block;
     display: none;
-    xdisplay: inline-block;
 }
 
 div#downscaled canvas {
-    xdisplay: none;
     zoom: 17.857;
     image-rendering: -moz-crisp-edges;
     image-rendering: -o-crisp-edges;
@@ -68,7 +67,6 @@ div#downscaled canvas {
 
 div#preprocessed {
     display: none;
-    /*display: inline-block;*/
     border: solid 1px #ccccff;
     width: 500px;
     height: 500px;
@@ -86,7 +84,6 @@ div#preprocessed canvas {
 div#chart {
     display: inline-block;
     vertical-align: top;
-    /*xmargin-left: 30px;*/
     width: 500px;
     height: 500px;
     overflow: hidden;
@@ -99,6 +96,17 @@ div#output {
     height: 645px;
     position: relative;
     top: -68px;
+}
+
+div#blind {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: #000000;
+    z-index: 1;
 }
 
 .canvas-icons {
@@ -153,4 +161,16 @@ div#output {
 #question #label {
     color: #ccccff;
     display: none;
+}
+
+@media screen and (max-width: 1060px) {
+    
+    #container {
+        width: 500px;
+    }
+
+    #chart {
+        width: 500px;
+        margin-top: 40px;
+    }
 }

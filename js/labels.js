@@ -136,3 +136,13 @@ var LABELS_LOOKUP = {};
 for (let i = 0; i < LABELS.length; i++) {
     LABELS_LOOKUP[LABELS[i]] = i;
 }
+
+var PLURALS =  [
+    'eyeglasses', 
+    'grapes', 
+    'pants', 
+    'rollerskates',
+    'scissors', 
+    'shorts', 
+    'stairs'
+];
