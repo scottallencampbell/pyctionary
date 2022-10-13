@@ -369,6 +369,10 @@ const reload = () => {
     sketchpad.mode = 'draw';
 }
 
+if (location.protocol !== "https:") {
+    location.protocol = "https:";
+}
+
 $(document).ready(load);
 
 
