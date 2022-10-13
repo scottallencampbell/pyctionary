@@ -300,10 +300,7 @@ const selectLabel = () => {
 
     setCookie('labelIndex', labelIndex.toString(), 365);
 
-    const hashedLabels = LABELS.map((e) => { return { label: e, hash: hashString(e + '...salt') }; } );
-    const sortedLabels = hashedLabels.sort((a, b) => a.hash > b.hash ? 1 : -1);    
-
-    currentLabel = sortedLabels[labelIndex].label;
+    currentLabel = LABELS[SHUFFLED[labelIndex]];
     console.log('index/label: ' + labelIndex + '/' + currentLabel );
 }
 
@@ -369,9 +366,9 @@ const reload = () => {
     sketchpad.mode = 'draw';
 }
 
-if (location.protocol !== "https:") {
-    location.protocol = "https:";
-}
+//if (location.protocol !== "https:") {
+//    location.protocol = "https:";
+//}
 
 $(document).ready(load);
 
