@@ -1,29 +1,17 @@
-body,
 html {
-    background-color: #000000;
-    font-family: 'Crimson Text';
+    background-color: #000000;    
     text-align: center;
 }
 
-.material-symbols-outlined {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;  /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-    color: #ccccff;
+body {
+    display: none;
+    font-family: 'Crimson Text';
 }
 
 #container {
     width: 1015px;
     margin: 0 auto;
-    display: none;
+    xdisplay: none;
 }
 
 #title {
@@ -161,6 +149,21 @@ div#blind {
 #question #label {
     color: #ccccff;
     display: none;
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    color: #ccccff;
 }
 
 @media screen and (max-width: 1060px) {

@@ -94,7 +94,7 @@ const celebrateWin = () => {
         const jsConfetti = new JSConfetti();
 
         jsConfetti.addConfetti({ 
-            emojis: ['🌈', '🦄', '🐶', '✨', '❤️', '😊', '🥇'],
+            emojis: ['🌈', '🦄', '🐶', '🚀', '❤️', '😊', '🥇', '🙌'],
             emojiSize: 50,
             confettiNumber: 80
         });
@@ -103,6 +103,10 @@ const celebrateWin = () => {
     setTimeout(() => {
         $('#container').fadeOut();
     }, 3000);
+
+    setTimeout(() => {
+        $('body').fadeOut();
+    }, 3500);
 
     setTimeout(() => {        
         reload();
@@ -321,7 +325,7 @@ const displayLabel = () => {
 }
 
 const renderPage = () => {
-    $('#container').delay(2000).fadeIn();
+    $('body').delay(2000).fadeIn();
     $('#question').delay(3000).fadeIn();
     $('#question #label').delay(4000).fadeIn();
     $('#main').delay(5000).fadeIn();
@@ -357,6 +361,7 @@ const load = () => {
 
 const reload = () => {
     $('#blind, #question, #question #label, #main').hide();
+    $('#container').show();
     clearCanvas();
     selectLabel();
     displayLabel();
@@ -366,9 +371,9 @@ const reload = () => {
     sketchpad.mode = 'draw';
 }
 
-//if (location.protocol !== "https:") {
-//    location.protocol = "https:";
-//}
+if (location.protocol !== 'https:' && !location.href.includes('localhost') && !location.href.includes('127.0.0.1')) {
+    location.protocol = 'https:';
+}
 
 $(document).ready(load);
 
