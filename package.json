@@ -1,0 +1,10 @@
+{
+  "name": "pyctionary",
+  "version": "1.0.0",
+  "description": "Static web app for pyctionary",
+  "scripts": {
+    "build": "echo 'No build step required for static site'"
+  },
+  "private": true
+}
+
