@@ -27,7 +27,7 @@ def load_images(path):
     
 model = keras.models.load_model(MODEL_PATH)
 
-predicition_images, prediction_labels = load_images(PREDICTION_IMAGES_PATH)
+predicition_images, prediction_labels = _images(PREDICTION_IMAGES_PATH)
 predictions = model.predict(predicition_images, verbose=0)
 
 for i, prediction in enumerate(predictions):
