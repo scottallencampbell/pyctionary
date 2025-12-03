@@ -356,7 +356,11 @@ const load = () => {
     renderPage();
 
     canvas.addEventListener('mousemove', registerMouseMove, false);
+    canvas.addEventListener('touchmove', registerMouseMove, false);
+
     interval = setInterval(guess, 500);
+
+    console.log(screen.width);
 }
 
 const reload = () => {
